@@ -2,4 +2,6 @@ api_version = "2024-10"
 
 [[extensions]]
 name = "testimonials-slider"
+handle = "testimonials-slider"
+uid = "38c630b7-1c0a-2625-726d-2802c062bd8b8b8da589"
 type = "theme"
