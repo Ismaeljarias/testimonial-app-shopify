@@ -15,7 +15,6 @@
   width: 100%;
   max-width: 600px;
   margin: 2rem auto;
-  padding: 0 1rem;
 }
 
 /* Container with scroll snap */
@@ -26,6 +25,7 @@
 
 .testimonials-slider:not(.single-testimonial) .testimonials-container {
   margin-bottom: 1.5rem;
+  padding: 2px;
 }
 
 .testimonials-track {
