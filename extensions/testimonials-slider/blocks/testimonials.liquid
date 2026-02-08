@@ -1,0 +1,309 @@
+{% comment %}
+  Testimonials Slider Block for Product Pages
+  Self-contained with avatar, name, stars, review, and gooey indicator
+{% endcomment %}
+
+{{ 'testimonials.css' | asset_url | stylesheet_tag }}
+
+<div class="testimonials-slider" data-testimonials-slider>
+  <div class="testimonials-container">
+    <div class="testimonials-track" role="region" aria-label="Customer testimonials">
+      {% if block.settings.testimonials %}
+        {% for i in (1..5) %}
+          {% assign avatar = 'avatar_' | append: i %}
+          {% assign name = 'name_' | append: i %}
+          {% assign rating = 'rating_' | append: i %}
+          {% assign review = 'review_' | append: i %}
+          
+          {% if block.settings[name] != blank %}
+            <div class="testimonial-card" role="group" aria-label="Testimonial {{ forloop.index }}">
+              <div class="testimonial-layout">
+                <div class="testimonial-avatar">
+                  {% if block.settings[avatar] != blank %}
+                    <img 
+                      src="{{ block.settings[avatar] | image_url: width: 80 }}" 
+                      alt="{{ block.settings[name] }}"
+                      width="80"
+                      height="80"
+                      loading="lazy"
+                    >
+                  {% else %}
+                    <div class="avatar-placeholder" aria-hidden="true">
+                      {{ block.settings[name] | slice: 0 | upcase }}
+                    </div>
+                  {% endif %}
+                </div>
+                
+                <div class="testimonial-content">
+                  <div class="testimonial-header">
+                    <h3 class="testimonial-name">{{ block.settings[name] }}</h3>
+                    <div class="testimonial-rating" role="img" aria-label="{{ block.settings[rating] }} out of 5 stars">
+                      {% for star in (1..5) %}
+                        <span class="star {% if star <= block.settings[rating] %}filled{% endif %}" aria-hidden="true">★</span>
+                      {% endfor %}
+                    </div>
+                  </div>
+                  <p class="testimonial-review">{{ block.settings[review] }}</p>
+                </div>
+              </div>
+            </div>
+          {% endif %}
+        {% endfor %}
+      {% else %}
+        {% comment %} Default demo testimonials {% endcomment %}
+        <div class="testimonial-card" role="group" aria-label="Testimonial 1">
+          <div class="testimonial-layout">
+            <div class="testimonial-avatar">
+              <div class="avatar-placeholder" aria-hidden="true">S</div>
+            </div>
+            <div class="testimonial-content">
+              <div class="testimonial-header">
+                <h3 class="testimonial-name">Sarah Johnson</h3>
+                <div class="testimonial-rating" role="img" aria-label="5 out of 5 stars">
+                  <span class="star filled" aria-hidden="true">★</span>
+                  <span class="star filled" aria-hidden="true">★</span>
+                  <span class="star filled" aria-hidden="true">★</span>
+                  <span class="star filled" aria-hidden="true">★</span>
+                  <span class="star filled" aria-hidden="true">★</span>
+                </div>
+              </div>
+              <p class="testimonial-review">Absolutely love this product! The quality exceeded my expectations and delivery was super fast.</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="testimonial-card" role="group" aria-label="Testimonial 2">
+          <div class="testimonial-layout">
+            <div class="testimonial-avatar">
+              <div class="avatar-placeholder" aria-hidden="true">M</div>
+            </div>
+            <div class="testimonial-content">
+              <div class="testimonial-header">
+                <h3 class="testimonial-name">Michael Chen</h3>
+                <div class="testimonial-rating" role="img" aria-label="4 out of 5 stars">
+                  <span class="star filled" aria-hidden="true">★</span>
+                  <span class="star filled" aria-hidden="true">★</span>
+                  <span class="star filled" aria-hidden="true">★</span>
+                  <span class="star filled" aria-hidden="true">★</span>
+                  <span class="star" aria-hidden="true">★</span>
+                </div>
+              </div>
+              <p class="testimonial-review">Great value for money. Would definitely recommend to friends and family!</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="testimonial-card" role="group" aria-label="Testimonial 3">
+          <div class="testimonial-layout">
+            <div class="testimonial-avatar">
+              <div class="avatar-placeholder" aria-hidden="true">E</div>
+            </div>
+            <div class="testimonial-content">
+              <div class="testimonial-header">
+                <h3 class="testimonial-name">Emma Davis</h3>
+                <div class="testimonial-rating" role="img" aria-label="5 out of 5 stars">
+                  <span class="star filled" aria-hidden="true">★</span>
+                  <span class="star filled" aria-hidden="true">★</span>
+                  <span class="star filled" aria-hidden="true">★</span>
+                  <span class="star filled" aria-hidden="true">★</span>
+                  <span class="star filled" aria-hidden="true">★</span>
+                </div>
+              </div>
+              <p class="testimonial-review">Perfect! Exactly what I was looking for. Customer service was exceptional too.</p>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+
+  {% comment %} Navigation Controls {% endcomment %}
+  <div class="testimonials-controls">
+    <button 
+      class="testimonial-nav prev" 
+      aria-label="Previous testimonial"
+      data-nav="prev"
+    >
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M15 18l-6-6 6-6"/>
+      </svg>
+    </button>
+
+    {% comment %} Gooey indicator dots {% endcomment %}
+    <div class="testimonials-indicators" role="tablist" aria-label="Testimonial navigation">
+      <svg class="gooey-filter" aria-hidden="true">
+        <defs>
+          <filter id="gooey">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur" />
+            <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -10" result="gooey" />
+            <feComposite in="SourceGraphic" in2="gooey" operator="atop"/>
+          </filter>
+        </defs>
+      </svg>
+      <div class="indicators-wrapper" data-indicators></div>
+    </div>
+
+    <button 
+      class="testimonial-nav next" 
+      aria-label="Next testimonial"
+      data-nav="next"
+    >
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M9 18l6-6-6-6"/>
+      </svg>
+    </button>
+  </div>
+</div>
+
+<script src="{{ 'testimonials.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "Testimonials Slider",
+  "target": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Testimonial 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "avatar_1",
+      "label": "Avatar"
+    },
+    {
+      "type": "text",
+      "id": "name_1",
+      "label": "Name",
+      "default": "Customer Name"
+    },
+    {
+      "type": "range",
+      "id": "rating_1",
+      "label": "Rating",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "default": 5
+    },
+    {
+      "type": "textarea",
+      "id": "review_1",
+      "label": "Review",
+      "default": "This product is amazing!"
+    },
+    {
+      "type": "header",
+      "content": "Testimonial 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "avatar_2",
+      "label": "Avatar"
+    },
+    {
+      "type": "text",
+      "id": "name_2",
+      "label": "Name"
+    },
+    {
+      "type": "range",
+      "id": "rating_2",
+      "label": "Rating",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "default": 5
+    },
+    {
+      "type": "textarea",
+      "id": "review_2",
+      "label": "Review"
+    },
+    {
+      "type": "header",
+      "content": "Testimonial 3"
+    },
+    {
+      "type": "image_picker",
+      "id": "avatar_3",
+      "label": "Avatar"
+    },
+    {
+      "type": "text",
+      "id": "name_3",
+      "label": "Name"
+    },
+    {
+      "type": "range",
+      "id": "rating_3",
+      "label": "Rating",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "default": 5
+    },
+    {
+      "type": "textarea",
+      "id": "review_3",
+      "label": "Review"
+    },
+    {
+      "type": "header",
+      "content": "Testimonial 4"
+    },
+    {
+      "type": "image_picker",
+      "id": "avatar_4",
+      "label": "Avatar"
+    },
+    {
+      "type": "text",
+      "id": "name_4",
+      "label": "Name"
+    },
+    {
+      "type": "range",
+      "id": "rating_4",
+      "label": "Rating",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "default": 5
+    },
+    {
+      "type": "textarea",
+      "id": "review_4",
+      "label": "Review"
+    },
+    {
+      "type": "header",
+      "content": "Testimonial 5"
+    },
+    {
+      "type": "image_picker",
+      "id": "avatar_5",
+      "label": "Avatar"
+    },
+    {
+      "type": "text",
+      "id": "name_5",
+      "label": "Name"
+    },
+    {
+      "type": "range",
+      "id": "rating_5",
+      "label": "Rating",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "default": 5
+    },
+    {
+      "type": "textarea",
+      "id": "review_5",
+      "label": "Review"
+    }
+  ]
+}
+{% endschema %}

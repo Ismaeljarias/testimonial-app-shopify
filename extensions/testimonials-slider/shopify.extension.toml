@@ -1,0 +1,5 @@
+api_version = "2024-10"
+
+[[extensions]]
+name = "testimonials-slider"
+type = "theme"

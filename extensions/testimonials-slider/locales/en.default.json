@@ -1,0 +1,26 @@
+{
+  "name": "Testimonials Slider",
+  "settings": {
+    "testimonial_1": {
+      "label": "Testimonial 1"
+    },
+    "testimonial_2": {
+      "label": "Testimonial 2"
+    },
+    "testimonial_3": {
+      "label": "Testimonial 3"
+    },
+    "avatar": {
+      "label": "Avatar Image"
+    },
+    "name": {
+      "label": "Customer Name"
+    },
+    "rating": {
+      "label": "Star Rating"
+    },
+    "review": {
+      "label": "Review Text"
+    }
+  }
+}
