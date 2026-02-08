@@ -165,13 +165,23 @@ class TestimonialsSlider {
 // Initialize all sliders on the page
 document.addEventListener('DOMContentLoaded', () => {
   const sliders = document.querySelectorAll('[data-testimonials-slider]');
-  sliders.forEach(slider => new TestimonialsSlider(slider));
+  sliders.forEach(slider => {
+    const count = parseInt(slider.getAttribute('data-testimonials-slider'));
+    if (count > 1) {
+      new TestimonialsSlider(slider);
+    }
+  });
 });
 
 // Re-initialize on Shopify section/block load (theme editor)
 if (window.Shopify?.designMode) {
   document.addEventListener('shopify:section:load', () => {
     const sliders = document.querySelectorAll('[data-testimonials-slider]');
-    sliders.forEach(slider => new TestimonialsSlider(slider));
+    sliders.forEach(slider => {
+      const count = parseInt(slider.getAttribute('data-testimonials-slider'));
+      if (count > 1) {
+        new TestimonialsSlider(slider);
+      }
+    });
   });
 }
